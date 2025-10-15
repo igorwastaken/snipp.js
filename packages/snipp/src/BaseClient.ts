@@ -1,5 +1,5 @@
-import Http from 'node:http'
-import Https from 'node:https';
+import Http from "node:http";
+import Https from "node:https";
 
 export interface BaseClientOptions {
   baseURL: string;
@@ -23,15 +23,15 @@ export class BaseClient {
     this.apiKey = options.apiKey;
     this.defaultHeaders = options.defaultHeaders || {};
     const httpAgent = new Http.Agent();
-    const httpsAgent = new Https.Agent({ minVersion: "TLSv1.2", })
+    const httpsAgent = new Https.Agent({ minVersion: "TLSv1.2" });
 
     this.agent = function (_parsedURL: any) {
-      if (_parsedURL.protocol == 'http:') {
+      if (_parsedURL.protocol == "http:") {
         return httpAgent;
       } else {
         return httpsAgent;
       }
-    }
+    };
   }
 
   private buildQueryString(params?: Record<string, any>): string {
@@ -85,10 +85,7 @@ export class BaseClient {
     return this.request<T>("GET", endpoint, options);
   }
 
-  protected async post<T>(
-    path: string,
-    options?: RequestInit,
-  ): Promise<T> {
+  protected async post<T>(path: string, options?: RequestInit): Promise<T> {
     const url = `${this.baseURL}${path}`;
     const res = await fetch(url, {
       ...options,
