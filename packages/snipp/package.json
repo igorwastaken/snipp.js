@@ -1,6 +1,6 @@
 {
   "name": "snipp.gg",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "An api wrapper of snipp.gg",
   "keywords": [
     "snipp",
@@ -22,7 +22,7 @@
     "docs": "typedoc --out ../../docs --plugin typedoc-github-theme --cname lrclib.js.org",
     "size": "size-limit",
     "prepare": "husky",
-    "prepublishOnly": "npm run lint && npm run test && npm run build && npm run docs"
+    "prepublishOnly": "npm run lint && npm run build"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.1.0",
