@@ -1,6 +1,6 @@
 {
   "name": "snipp.gg",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "An api wrapper of snipp.gg",
   "keywords": [
     "snipp",
