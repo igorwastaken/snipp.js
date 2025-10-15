@@ -1,6 +1,6 @@
 {
   "name": "snipp.gg",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "An api wrapper of snipp.gg",
   "keywords": [
     "snipp",
@@ -43,6 +43,6 @@
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.46.1"
   },
-  "author": "Igor Figueiredo",
+  "author": "Snipp",
   "license": "MIT"
 }
