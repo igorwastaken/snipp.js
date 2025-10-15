@@ -1,7 +1,7 @@
 import { Client, User } from "../src";
 
 describe("Trying to create client", () => {
-  const client = new Client(process.env["API_KEY"] as string); // fake key
+  const client = new Client(process.env["API_KEY"] as string);
   test("Get user uploads", async () => {
     const result = await client.getGallery();
     console.info(result.uploads[0]);

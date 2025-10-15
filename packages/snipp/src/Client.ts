@@ -54,7 +54,6 @@ export class Client extends BaseClient {
     formData.append("file", file);
 
     return this.post("/upload", {
-      baseURL: "https://nano.snipp.gg",
       body: formData,
     });
   }

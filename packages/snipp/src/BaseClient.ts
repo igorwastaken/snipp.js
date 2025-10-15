@@ -1,3 +1,6 @@
+import Http from 'node:http'
+import Https from 'node:https';
+
 export interface BaseClientOptions {
   baseURL: string;
   apiKey?: string;
@@ -14,11 +17,21 @@ export class BaseClient {
   private baseURL: string;
   private apiKey?: string;
   private defaultHeaders: Record<string, string>;
-
+  private agent: any;
   constructor(options: BaseClientOptions) {
     this.baseURL = options.baseURL;
     this.apiKey = options.apiKey;
     this.defaultHeaders = options.defaultHeaders || {};
+    const httpAgent = new Http.Agent();
+    const httpsAgent = new Https.Agent({ minVersion: "TLSv1.2", })
+
+    this.agent = function (_parsedURL: any) {
+      if (_parsedURL.protocol == 'http:') {
+        return httpAgent;
+      } else {
+        return httpsAgent;
+      }
+    }
   }
 
   private buildQueryString(params?: Record<string, any>): string {
@@ -50,10 +63,11 @@ export class BaseClient {
     if (this.apiKey) {
       headers["api-key"] = `${this.apiKey}`;
     }
-
     const response = await fetch(url, {
       method,
       headers,
+      // @ts-ignore
+      agent: this.agent,
       body: options.body ? JSON.stringify(options.body) : undefined,
     });
 
@@ -73,12 +87,14 @@ export class BaseClient {
 
   protected async post<T>(
     path: string,
-    options?: RequestInit & { baseURL?: string },
+    options?: RequestInit,
   ): Promise<T> {
-    const url = `${options?.baseURL || this.baseURL}${path}`;
+    const url = `${this.baseURL}${path}`;
     const res = await fetch(url, {
       ...options,
       method: "POST",
+      // @ts-ignore
+      agent: this.agent,
       headers: {
         "api-key": `${this.apiKey}`,
         ...(options?.headers || {}),
